@@ -1,0 +1,22 @@
+{# Partial Name: Header #}
+
+<header class="site-header">
+  <nav class="top-navbar" role="navigation">
+    <a href="{{site.url}}">
+      <img class="site-logo" src="{{imgix_link}}/img/logos/coastapp/site_logo.svg" alt="Coast App Logo" />
+    </a>
+    <button class="mobile button" role="button" type="button">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <ul class="menu-items">
+      {% for item in main_menu.items %}
+        <li>
+          <a href={{item.link}}>{{item.title}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% include 'partials/sms_modal.twig' %}
+  </nav>
+</header>

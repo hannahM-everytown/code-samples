@@ -1,0 +1,39 @@
+{# Partial Name: Review #}
+
+{# this is the partial that populates our review content piece.
+   it's currently only on the homepage. #}
+
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+
+  {% for review in reviews %}
+
+    <div class="review swiper-slide">
+
+      {% if review.reviews_icon %}
+        <svg class="icon" data-icon="{{review.reviews_icon|lower}}">
+          <use xlink:href="{{theme.link}}/dist/img/icons/icons.svg#{{review.reviews_icon|lower}}"></use>
+        </svg>
+      {% endif %}
+
+      {% if review.reviews_favorite_feature %}
+        <h4>{{review.reviews_favorite_feature}}</h4>
+      {% endif %}
+
+      {% if review.content %}
+        <blockquote data-user="{{review.title}}">{{review.content}}</blockquote>
+      {% endif %}
+
+      {% if review.title %}
+        <h5>{{review.title}}</h5>
+      {% endif %}
+
+      {% if review.reviews_reviewed_from %}
+        <p>{{review.reviews_reviewed_from}}</p>
+      {% endif %}
+
+    </div>
+
+  {% endfor %}
+  </div>
+</div>

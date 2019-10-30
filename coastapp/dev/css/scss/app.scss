@@ -1,0 +1,47 @@
+@charset 'UTF-8';
+
+// Setup custom variables
+
+$black: #000;
+$dark-purple: #281e38;
+$dark-gray: #808080;
+$dark-teal: #34465b;
+$green: #00caac;
+$light-gray: #f7f7f7;
+$light-turquoise: #00caac;
+$red: #ff5e84;
+$teal: #31727e;
+$turquoise: #00c3d4;
+$white: #fff;
+
+$global-font-size: 100%;
+$global-line-height: 1.125em;
+$heading: "MaaxRegular", arial, helvetica, sans-serif;
+$heading-bold: "MaaxBold", arial, helvetica, sans-serif;
+
+$body-heading: "SFProDisplayRegular", arial, helvetica, sans-serif;
+$body-text: "SFProTextRegular", arial, helvetica, sans-serif;
+$body-text-bold: "SFProTextBold", arial, helvetica, sans-serif;
+
+$body-font-size: 0.875em;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+//Paths to imgix
+$imgix-link: "https://coast-wp.imgix.net";
+$imgix-font: "#{$imgix-link}/fonts";
+$imgix-img: "#{$imgix-link}/img";
+
+// SCSS Files
+@import "mixins";
+@import "partials/font_faces";
+@import "partials/global";
+@import "partials/layout/layout_global";
+@import "partials/layout/layout_home";
+@import "partials/layout/layout_page";
+@import "partials/layout/layout_post";
+@import "partials/nav";
+@import "partials/home";
+@import "partials/carousels";
+@import "partials/page";
+@import "partials/footer";

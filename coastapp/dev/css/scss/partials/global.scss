@@ -1,0 +1,289 @@
+// Global styles
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+}
+
+body {
+  color: $dark-purple;
+  font-family: $body-text;
+  font-size: $global-font-size;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+header {
+  align-items: center;
+  width: 100%;
+  z-index: 9999;
+  position: fixed;
+  @include medium {
+    background: transparent;
+  }
+}
+
+body:not(.home) main {
+  margin-top: 65px;
+}
+
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+picture img {
+  height: auto;
+  width: 100%;
+}
+
+svg {
+  fill: none;
+  height: 40px;
+  stroke: $dark-gray;
+  stroke-width: 2;
+  width: 40px;
+}
+
+button,
+.button {
+  background: $dark-purple;
+  border: 2px solid $dark-purple;
+  border-radius: 24px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  color: $white;
+  cursor: pointer;
+  font-family: $body-text;
+  font-size: 1em;
+  padding: 12px 18px;
+  &:hover {
+    box-shadow: none;
+  }
+  &:active {
+    box-shadow: none;
+  }
+}
+.branch {
+  box-shadow: none;
+  margin-left: 10px;
+}
+// form is display: none; Move this to home.scss if you want to add
+// another form to the site
+form {
+  align-items: center;
+  background: $white;
+  border-radius: 8px;
+  box-shadow: 0 4px 11px rgba(0, 0, 0, 0.25);
+  display: none;
+  color: $dark-gray;
+  height: 175px;
+  margin-top: 5px;
+  @include medium {
+    display: grid; // keep this here even though it's a grid style
+    visibility: hidden;
+    width: 375px;
+  }
+  input {
+    align-self: end;
+    border-color: $dark-purple;
+    border-width: 0 0 2px 0;
+    font-size: $body-font-size;
+    height: 30px;
+    margin: 10px 10px 0 20px;
+    outline: 0;
+    &::placeholder {
+      font-size: $body-font-size;
+    }
+  }
+
+  hr {
+    border: 1px solid $light-gray;
+    position: absolute;
+    top: 50px;
+    width: 90%;
+  }
+
+  button {
+    align-self: end;
+    margin-top: 10px;
+    position: relative;
+    width: 150px;
+  }
+  .link-sent {
+    box-shadow: none;
+    cursor: default;
+    margin-left: 10px;
+    margin-top: 10px;
+    &::before {
+      content: url("#{$imgix-img}/icons/sent.svg");
+      left: 8px;
+      position: absolute;
+      top: 4px;
+    }
+  }
+  span {
+    align-self: end;
+    background: $light-gray;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-size: $body-font-size;
+    padding: 15px 20px;
+  }
+  span.sent {
+    align-self: end;
+    background: $white;
+    border-radius: 0;
+    position: relative;
+    &::after {
+      content: url("#{$imgix-img}/icons/emoji_cool.svg");
+      left: 10px;
+      position: relative;
+      top: 6px;
+    }
+  }
+  span.error {
+    background: $white;
+    border-radius: 0;
+    display: none;
+    font-size: 0.75em;
+    padding: 0 20px;
+    color: $red;
+  }
+
+  a {
+    color: $dark-gray;
+    font-family: $body-text-bold;
+    &:hover {
+      color: $dark-purple;
+    }
+  }
+  .send-again {
+    cursor: pointer;
+  }
+}
+
+table,
+th,
+td {
+  border: 1px solid $dark-purple;
+  border-collapse: collapse;
+}
+td {
+  padding: 10px;
+}
+
+blockquote {
+  font-family: $body-text;
+  line-height: 24px;
+  margin: 0;
+  p {
+    color: $dark-purple;
+  }
+}
+
+footer {
+  background: $dark-teal;
+  ul {
+    list-style: none;
+  }
+}
+
+ul {
+  line-height: 24px;
+  li {
+    margin: 10px 0;
+  }
+}
+
+/* main, feature, testimonial, footer navs */
+ul.menu-items {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  list-style: none;
+  li {
+    color: $dark-gray;
+    cursor: pointer;
+    @include medium {
+      &:not(:last-of-type) {
+        margin-right: 25px;
+      }
+    }
+    a {
+      font-family: $body-heading;
+      font-weight: $font-weight-semibold;
+    }
+  }
+  .active {
+    svg {
+      stroke: $light-turquoise;
+    }
+  }
+}
+
+.not-found {
+  padding-top: 40px;
+  margin-bottom: 60px;
+}
+
+/* Typography */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $dark-purple;
+  font-family: $heading-bold;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2em;
+  @include medium {
+    align-self: end;
+    font-size: 2.5em;
+  }
+}
+
+h2 {
+  font-size: 2em;
+  text-align: left;
+  @include medium {
+    font-size: 2.5em;
+    text-align: center;
+  }
+}
+
+h3 {
+  font-size: 1.25em;
+  color: $teal;
+  margin-bottom: 15px;
+  @include medium {
+    font-size: 1.75em;
+  }
+}
+
+h4 {
+  font-family: $body-heading;
+  font-size: 1.25em;
+  font-weight: $font-weight-semibold;
+  @include medium {
+    color: $dark-gray;
+  }
+}
+
+p {
+  line-height: 24px;
+  margin: 0;
+}
+
+a {
+  color: $white;
+  font-family: $body-text;
+  text-decoration: none;
+}

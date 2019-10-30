@@ -1,0 +1,539 @@
+section.intro {
+  background: transparent;
+  padding: 120px 0 160px 0;
+  position: relative;
+  @include smaller {
+    padding: 30% 0 40% 0;
+  }
+  @include medium {
+    padding: 0;
+    position: relative;
+  }
+  &::before {
+    background: url("#{$imgix-img}/background_images/mobile/mobile_brushstroke_intro_gradient.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 100%;
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    z-index: -1;
+    @include smallest {
+      top: 53%;
+    }
+    @include smaller {
+      background-size: cover;
+      top: 40%;
+    }
+    @include small {
+      background-size: cover;
+      top: 30%;
+    }
+    @include medium {
+      background: url("#{$imgix-img}/background_images/desktop/brushstroke_intro_gradient.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      top: 58%;
+    }
+  }
+  .headline {
+    p {
+      font-family: $heading;
+      font-size: 1.125em;
+      line-height: 30px;
+      @include medium {
+        font-size: 1.375em;
+      }
+    }
+    .cta p {
+      display: none;
+    }
+  }
+  .hero {
+    display: none;
+    @include medium {
+      display: block;
+    }
+  }
+  picture img {
+    width: 100%;
+  }
+}
+
+section.features {
+  align-items: center;
+  background: transparent;
+  @include medium {
+    padding-bottom: 15%;
+  }
+  @include mediumish {
+    padding-top: 4%;
+  }
+  @include large {
+    padding-top: 5%;
+  }
+  @include larger {
+    padding-top: 7%;
+  }
+  @include largest {
+    padding-top: 8%;
+  }
+  @include wide {
+    padding-top: 9%;
+  }
+  .bundle {
+    align-items: center;
+    display: none;
+    @include medium {
+      display: block;
+    }
+  }
+  picture:not(:last-of-type) {
+    margin-bottom: 20px;
+  }
+  p {
+    color: $dark-gray;
+  }
+  .mobile-app-features {
+    text-align: left;
+    .icon {
+      stroke: $light-turquoise;
+    }
+    @include medium {
+      display: none;
+    }
+    p {
+      margin-left: 7px;
+    }
+  }
+  .feature-nav {
+    display: none;
+    @include medium {
+      display: flex;
+      margin-bottom: 0;
+      padding: 0;
+    }
+    li {
+      height: 88px;
+      @include medium {
+        align-items: center;
+        margin: 0;
+        padding: 10px;
+        width: 25%;
+        @include largest {
+          height: 66px;
+        }
+        h4 {
+          margin-top: 3px;
+        }
+        svg {
+          align-self: end;
+        }
+        &.active {
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+          h4 {
+            color: $dark-purple;
+          }
+          svg {
+            stroke: $light-turquoise;
+          }
+        }
+        &:hover {
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+          h4 {
+            color: $dark-purple;
+          }
+          & > svg * {
+            stroke: $light-turquoise;
+          }
+        }
+        p {
+          @include medium {
+            align-self: start;
+            grid-column: 1/3;
+            margin-left: 7px;
+          }
+        }
+      }
+    }
+  }
+}
+
+section.reviews {
+  align-items: center;
+  background: $light-gray;
+  padding-top: 60px;
+  @include medium {
+    padding-top: 80px;
+  }
+  .swiper-wrapper {
+    display: flex;
+    @include largest {
+      justify-content: center;
+    }
+  }
+  .swiper-no-swiping {
+    .review:last-of-type {
+      margin-right: 0;
+    }
+  }
+  .swiper-slide {
+    width: 95%;
+  }
+  .review {
+    background: $white;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+    height: 350px;
+    justify-content: center;
+    line-height: 24px;
+    margin: 20px 0;
+    text-align: center;
+    @include largest {
+      // adding !important to override swiper.js styles on the carousel
+      margin-right: 10px !important;
+      width: 23% !important;
+      max-width: 250px !important;
+      &:first-of-type {
+        margin-left: 10px !important;
+      }
+    }
+    svg {
+      align-self: center;
+      justify-self: center;
+      padding-top: 20px;
+      stroke: $light-turquoise;
+      transform: scale(1.2);
+    }
+    h4 {
+      color: $dark-purple;
+    }
+    h5 {
+      align-self: end;
+      color: $dark-gray;
+      font-family: $body-text;
+      font-size: 1em;
+    }
+    blockquote {
+      padding: 0 15px;
+      p {
+        color: $dark-purple;
+      }
+    }
+    p {
+      color: $dark-gray;
+    }
+    &:hover {
+      box-shadow: 0 11px 15px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+section.logos {
+  background: $light-gray;
+  cursor: pointer;
+  padding: 20px 0 40px 0;
+  @include medium {
+    padding: 60px 0 80px 0;
+  }
+  .swiper-wrapper {
+    align-items: center;
+  }
+}
+
+section.control {
+  background: transparent;
+  padding-top: 60px;
+  position: relative;
+  &::before {
+    background: url("#{$imgix-img}/background_images/mobile/mobile_brushstroke_control1_gradient.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 100%;
+    position: absolute;
+    top: 350px;
+    width: 100%;
+    z-index: -1;
+    @include medium {
+      background: url("#{$imgix-img}/background_images/desktop/brushstroke_control1_gradient.png");
+      background-repeat: no-repeat;
+      background-size: 50% 50%;
+      right: -45%;
+      top: 160px;
+    }
+  }
+  &::after {
+    background: url("#{$imgix-img}/background_images/mobile/mobile_brushstroke_control2_gradient.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 100%;
+    position: absolute;
+    top: 1720px;
+    width: 100%;
+    z-index: -1;
+    @include medium {
+      background: url("#{$imgix-img}/background_images/desktop/brushstroke_control2_gradient.png");
+      background-repeat: no-repeat;
+      background-size: 50% 50%;
+      left: 2%;
+      top: 1175px;
+    }
+  }
+  @include medium {
+    padding-top: 120px;
+  }
+  .description:first-of-type {
+    @include medium {
+      margin-top: 40px;
+    }
+  }
+  .description:nth-of-type(2) {
+    @include medium {
+      align-self: center;
+    }
+  }
+  .description:nth-of-type(4) {
+    @include medium {
+      margin-top: 20px;
+    }
+  }
+  picture {
+    justify-self: center;
+    &:nth-of-type(3) {
+      display: grid;
+      @include medium {
+        display: block;
+      }
+      img {
+        justify-self: center;
+        width: 75%;
+        @include medium {
+          justify-self: auto;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+section.testimonials {
+  align-items: center;
+  padding-top: 60px;
+  position: relative;
+  &::after {
+    background: url("#{$imgix-img}/background_images/mobile/mobile_brushstroke_cta_gradient.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    bottom: 0;
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    @include medium {
+      background: url("#{$imgix-img}/background_images/desktop/brushstroke_cta_gradient.png");
+      background-repeat: no-repeat;
+      background-size: 100% 110%;
+      z-index: -2;
+    }
+  }
+  @include medium {
+    padding-top: 80px;
+  }
+  .swiper-container {
+    box-shadow: 0 2px 75px rgba(0, 0, 0, 0.15);
+  }
+  .testimonial {
+    align-items: center;
+    background: $white;
+    cursor: pointer;
+    display: flex;
+    height: 400px;
+    justify-content: center;
+    position: relative;
+    @include medium {
+      display: grid; //need to keep this here to override display:flex;
+      height: auto;
+    }
+    .details {
+      align-items: center;
+      height: 80%;
+      position: relative;
+      width: 100%;
+      @include medium {
+        height: 95%;
+      }
+      @include mediumish {
+        height: 80%;
+      }
+      @include large {
+        height: 75%;
+      }
+      blockquote {
+        align-self: start;
+        margin-top: 60px;
+        @include medium {
+          margin-top: 40px;
+        }
+        &::before {
+          position: absolute;
+          content: url("#{$imgix-img}/icons/quotation_mark.svg");
+          left: 20px;
+          top: 5px;
+          @include medium {
+            left: auto;
+          }
+          @include larger {
+            left: 6%;
+            top: 30px;
+          }
+        }
+      }
+      .profile {
+        align-self: end;
+        img {
+          align-self: end;
+          border-radius: 50%;
+        }
+        h5 {
+          align-self: end;
+          color: $dark-gray;
+          font-family: $body-text-bold;
+          font-size: 1em;
+        }
+        p {
+          color: $dark-gray;
+          line-height: 22px;
+          position: initial;
+        }
+      }
+    }
+    picture {
+      display: none;
+      @include medium {
+        display: block;
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .testimonial-nav {
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0;
+    @include medium {
+      display: flex;
+    }
+    @include large {
+      margin-top: 40px;
+    }
+    li {
+      align-items: center;
+      background: $light-gray;
+      box-shadow: 0 2px 75px rgba(0, 0, 0, 0.15);
+      display: flex;
+      height: 50px;
+      margin: 0;
+      @include medium {
+        margin-right: 25px;
+        width: 25%;
+      }
+      svg {
+        margin: 0 5%;
+        @include medium {
+          margin: 0 3px;
+        }
+        @include large {
+          margin: 0 5px 0 10px;
+        }
+      }
+      h4 {
+        color: $dark-gray;
+        @include medium {
+          font-size: 1em;
+        }
+        @include largest {
+          font-size: 1.25em;
+        }
+      }
+      &.active {
+        background: $white;
+        box-shadow: none;
+        svg {
+          stroke: $light-turquoise;
+        }
+        h4 {
+          color: $dark-purple;
+        }
+      }
+      &:hover {
+        background: $white;
+        box-shadow: none;
+        h4 {
+          color: $dark-purple;
+        }
+        & > svg * {
+          stroke: $light-turquoise;
+        }
+      }
+    }
+  }
+  .just-coast {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 440px;
+    padding-bottom: 80px;
+    position: relative;
+    #coast-symbol {
+      bottom: -59px;
+      height: 140px;
+      position: absolute;
+      width: 140px;
+      @include medium {
+        bottom: -85px;
+        height: 203px;
+        width: 202px;
+      }
+    }
+  }
+}
+
+section.signup {
+  background: $dark-purple;
+  height: 400px;
+  padding: 40px 0;
+  @include medium {
+    height: auto;
+    padding: 0;
+  }
+  h2 {
+    align-self: end;
+    color: $white;
+  }
+  .cta {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    p {
+      color: #9685b1;
+      margin-top: 40px;
+      @include medium {
+        margin-top: 20px;
+      }
+    }
+    .form {
+      margin-left: 150px;
+      position: relative;
+      top: -45px;
+    }
+    .button:not(.form button) {
+      border: 1px solid $white;
+    }
+  }
+}

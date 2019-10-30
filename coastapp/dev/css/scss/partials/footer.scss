@@ -1,0 +1,31 @@
+.footer {
+  align-items: center;
+  padding: 80px 0 20px 0;
+  @include medium {
+    padding-top: 40px;
+  }
+}
+
+.footer-menu {
+  align-self: start;
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0;
+  }
+  a {
+    font-size: 1.125em;
+    font-family: $heading-bold;
+    line-height: 28px;
+  }
+}
+
+.apple {
+  margin-bottom: 20px;
+  width: 154px;
+}
+
+.copyright {
+  color: $teal;
+  font-size: 0.875em;
+}

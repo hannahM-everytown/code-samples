@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "MaaxBold";
+  src: url("#{$imgix-link}/fonts/maax/MaaxBold.otf") format("opentype"),
+    url("#{$imgix-link}/fonts/maax/MaaxBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "MaaxRegular";
+  src: url("#{$imgix-link}/fonts/maax/MaaxRegular.woff2") format("woff2"),
+    url("#{$imgix-link}/fonts/maax/MaaxRegular.woff") format("woff"),
+    url("#{$imgix-link}/fonts/maax/MaaxRegular.otf") format("opentype"),
+    url("#{$imgix-link}/fonts/maax/MaaxRegular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SFProDisplayBold";
+  src: url("#{$imgix-link}/fonts/sfpro/SFProDisplayBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "SFProDisplayRegular";
+  src: url("#{$imgix-link}/fonts/sfpro/SFProDisplayRegular.woff2")
+      format("woff2"),
+    url("#{$imgix-link}/fonts/sfpro/SFProDisplayRegular.woff") format("woff"),
+    url("#{$imgix-link}/fonts/sfpro/SFProDisplayRegular.otf") format("opentype"),
+    url("#{$imgix-link}/fonts/sfpro/SFProDisplayRegular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SFProTextBold";
+  src: url("#{$imgix-link}/fonts/sfpro/SFProTextBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "SFProTextRegular";
+  src: url("#{$imgix-link}/fonts/sfpro/SFProTextRegular.otf") format("opentype"),
+    url("#{$imgix-link}/fonts/sfpro/SFProTextRegular.ttf") format("truetype"),
+    url("#{$imgix-link}/fonts/sfpro/SFProTextRegular.woff2") format("woff2"),
+    url("#{$imgix-link}/fonts/sfpro/SFProTextRegular.woff") format("woff");
+}

@@ -1,0 +1,14 @@
+{# Partial Name: Sign up form for SMS -- modal #}
+
+{# This partial is currently being called into the home.twig template within the top navbar, intro section, and signup sections. #}
+
+<div class="cta">
+  <button class="button" role="button" type="button" value="Sign Up for Early Access">Sign Up for Early Access</button>
+  <p>Coast is free during our early access period</p>
+  <form class="form modal">
+    <input type="text" class="phone" name="phone" placeholder="Enter your mobile number">
+    <span class="error">Please enter a valid phone number.</span>
+    <button class="button branch" role="button" type="button" value="Send App Link">Send App Link</button>
+    <span>You’ll receive a link to the <a href="https://apps.apple.com/us/app/coast-employee-messaging/id1257883693" target="_blank">App Store</a> or <a href="https://play.google.com/store/apps/details?id=com.fomo.android.app&hl=en_US" target="_blank">Google Play Store</a>. No spam. Coast is free during our early access period</span>
+  </form>
+</div>

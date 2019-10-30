@@ -1,0 +1,52 @@
+{# Partial Name: Testimonial #}
+
+{# this is the partial that populates our testimonial content piece.
+   it's currently only on the homepage. #}
+
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+  {% for testimonial in testimonials %}
+    <div class="testimonial swiper-slide">
+      <div class="details">
+
+        <blockquote data-customer="{{testimonial.title}}">{{testimonial.content}}</blockquote>
+
+        <div class="profile">
+          {% if testimonial.testimonials_profile_picture %}
+            <img src="{{Image(testimonial.testimonials_profile_picture).src}}"
+                 alt="{% if Image(testimonial.testimonials_profile_picture).alt %}{{Image(testimonial.testimonials_profile_picture).alt}}{% else %}{{testimonial.title}} Profile Picture{% endif %}"
+            />
+          {% endif %}
+
+          {% if testimonial.title %}
+            <h5>{{testimonial.title}}</h5>
+          {% endif %}
+
+          {% if testimonial.testimonials_company %}
+            <p>{{testimonial.testimonials_company}}</p>
+          {% endif %}
+        </div>
+       
+      </div>
+
+      {% if testimonial.thumbnail %}
+        <picture>
+          <img src="{{testimonial.thumbnail.src}}" alt="{% if testimonial.thumbnail.alt %}{{testimonial.thumbnail.alt}}{% elseif testimonial.company %}{{testimonial.company}}{% else %}testimonial{% endif %}" />
+        </picture>
+      {% endif %}
+
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+<ul class="testimonial-nav menu-items">
+{% for testimonial in testimonials %}
+  <li>
+    <svg class="icon" {% if testimonial.terms('post_tag') %}data-icon="{{testimonial.terms('post_tag')|first|sanitize}}"{% endif %}">
+      <use xlink:href="{{theme.link}}/dist/img/icons/icons.svg#{% if testimonial.terms('post_tag') %}{{testimonial.terms('post_tag')|first|sanitize}}{% endif %}"></use>
+    </svg>
+    <h4>{% if testimonial.terms('post_tag') %}{{testimonial.terms('post_tag')|first}}{% endif %}</h4>
+  </li>
+{% endfor %}
+</ul>

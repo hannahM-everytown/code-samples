@@ -1,0 +1,20 @@
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
+  @include medium {
+    display: block;
+    filter: grayscale(100%);
+    // right: -5px;
+    transform: scale(0.7);
+  }
+}
+
+.swiper-button-prev {
+  left: -5px;
+}
+.swiper-button-next {
+  right: -5px;
+  @include large {
+    right: 0;
+  }
+}

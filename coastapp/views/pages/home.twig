@@ -1,0 +1,165 @@
+{# Page Name: Home #}
+
+{% extends "layouts/base.twig" %}
+
+{% block content %}
+
+  <section class="intro parallax">
+    <div class="headline">
+
+      {% if post.title %}
+        <h1>{{post.title}}</h1>
+      {% endif %}
+
+      {% if post.content %}
+        <p>{{post.content}}</p>
+      {% endif %}
+
+      {% include 'partials/sms_modal.twig' %}
+
+    </div>
+
+    <div class="hero">
+
+      {% if post.thumbnail %}
+        <picture>
+          <img src={{post.thumbnail.src}} alt="{% if post.thumbnail.alt %}{{post.thumbnail.alt}}{% else %}Hero image{% endif %}" />
+        </picture>
+      {% endif %}
+
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Coast, an all-in-one workspace</h2>
+    <ul class="feature-nav menu-items">
+    {% for feature in app_features %}
+      <li>
+        {% for item in feature.desktop %}
+          {% if item.icon %}
+            <svg class="icon" data-icon="{{item.icon|lower}}">
+              <use xlink:href="{{theme.link}}/dist/img/icons/icons.svg#{{item.icon|lower}}"></use>
+            </svg>
+          {% endif %}
+          {% if item.title %}
+            <h4 class="feature">{{item.title}}</h4>
+          {% endif %}
+
+          {% if item.subtitle %}
+            <p>{{item.subtitle}}</p>
+          {% endif %}
+        {% endfor %}
+      </li>
+    {% endfor %}
+    </ul>
+
+    <div class="bundle">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for feature in app_features %}
+            {% for item in feature.desktop %}
+            {% if item.image %}
+              <picture class="swiper-slide">
+                <img src="{{Image(item.image).src}}" alt="{% if Image(item.image).alt %}{{Image(item.image).alt}}{% else %}App Feature{% endif %}">
+              </picture>
+            {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-app-features">
+      {% for feature in app_features %}
+        {% for item in feature.mobile %}
+          <div class="details">
+            {% if item.icon %}
+              <svg class="icon {{item.icon|lower}}">
+                <use xlink:href="{{theme.link}}/dist/img/icons/icons.svg#{{item.icon|lower}}"></use>
+              </svg>
+            {% endif %}
+            {% if item.title %}
+              <h4 class="feature">{{item.title}}</h4>
+            {% endif %}
+            {% if item.subtitle %}
+              <p>{{item.subtitle}}</p>
+            {% endif %}
+          </div>
+          {% if item.image %}
+            <picture>
+              <img src="{{Image(item.image).src}}" alt="{% if Image(item.image).alt %}{{Image(item.image).alt}}{% else %}App Feature{% endif %}">
+            </picture>
+          {% endif %}
+      {% endfor %}
+    {% endfor %}
+    </div>
+
+  </section>
+
+  <section class="reviews">
+    <h2>Loved by teams of all sizes</h2>
+    <div class="bundle">
+      {% include 'partials/review.twig' %}
+    </div>
+  </section>
+
+  <section class="logos">
+    <div class="bundle">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for logo in customer_logos %}
+            <div class="swiper-slide">
+              <img class="logo" src="{{Image(logo)}}" alt="{% if Image(logo).alt%}{{Image(logo).alt}}{% else %}Customer Logo{% endif %}" />
+            </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="control">
+    <h2>With Coast you’re in control</h2>
+
+    {% for highlight in in_control %}
+
+      <div class="description">
+        {% if highlight.title %}
+          <h3>{{highlight.title}}</h3>
+        {% endif %}
+
+        {% if highlight.description %}
+          <p>{{highlight.description}}</p>
+        {% endif %}
+      </div>
+
+      {% if highlight.image %}
+        <picture>
+          <img src="{{Image(highlight.image).src}}" alt="{% if Image(highlight.image).alt %}{{Image(highlight.image).alt}}{% else %}You're in Control Image{% endif %}" />
+        </picture>
+      {% endif %}
+
+    {% endfor %}
+
+  </section>
+
+  <section class="testimonials">
+    <h2>Love from our customers</h2>
+    <div class="bundle">
+      {% include 'partials/testimonial.twig' %}
+    </div>
+
+    <div class="just-coast">
+      <h2>Why worry when you can Coast?</h2>
+      <img id="coast-symbol" src="{{imgix_link}}/img/logos/coastapp/coast_symbol_optimized.gif" alt="Coast Animated Symbol" />
+    </div>
+    
+  </section>
+
+  <section class="signup">
+    <h2>Ready to test the waters?</h2>
+    {% include 'partials/sms_modal.twig' %}
+  </section>
+
+{% endblock %}

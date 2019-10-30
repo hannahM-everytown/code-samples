@@ -1,0 +1,37 @@
+{# Layout Name: Base #}
+
+{% block html_head_container %}
+
+{% include 'views/partials/html-header.twig' %}
+  {% block head %}
+  {% endblock %}
+
+  {% block javascripts %}
+    {% include './partials/segment_snippet.twig' %}
+  {% endblock %}
+
+  </head>
+{% endblock %}
+
+  <body class="{{body_class}}" data-template="base.twig">
+
+    {% block header %}
+      {% include 'views/partials/header.twig' %}
+    {% endblock %}
+
+    {% block main %}
+      <main class="main" role="main" class="content-wrapper">
+        {% block content %}
+            <!-- Main content here -->
+            <p>SORRY! No content found!</p>
+        {% endblock %}
+      </main>
+    {% endblock %}
+
+    {% block footer %}
+      {% include 'views/partials/footer.twig' %}
+      {{ function('wp_footer') }}
+    {% endblock %}
+
+  </body>
+</html>

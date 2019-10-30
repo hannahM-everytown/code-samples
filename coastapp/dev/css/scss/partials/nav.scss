@@ -1,0 +1,154 @@
+// site wide navbar
+.top-navbar {
+  align-items: center;
+  background: $white;
+  @include medium {
+    animation-duration: 0.5s;
+    background: transparent;
+    transition: 0.5s;
+  }
+  .site-logo {
+    width: 140px;
+    @include medium {
+      width: auto;
+    }
+  }
+  .mobile.button {
+    align-items: center;
+    background: $white;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    flex-direction: column;
+    height: 40px;
+    justify-content: center;
+    justify-self: end;
+    margin-top: 0;
+    width: 45px;
+    .bar {
+      background: $dark-purple;
+      border-radius: 2px;
+      display: block;
+      height: 3px;
+      margin: 1px 0;
+      transition: 0.4s;
+      width: 20px;
+    }
+    @include medium {
+      display: none;
+    }
+  }
+  .drop .bar {
+    &:first-of-type {
+      transform: rotate(-45deg) translate(-2px, 2px);
+    }
+    &:nth-of-type(2) {
+      opacity: 0;
+    }
+    &:last-of-type {
+      transform: rotate(45deg) translate(-4px, -4px);
+    }
+  }
+  .menu-items {
+    display: none;
+    margin: 0;
+    padding: 0;
+    @include medium {
+      display: flex !important;
+      justify-content: flex-end;
+      margin-right: 15px;
+      padding-bottom: 0;
+    }
+    li {
+      margin: 0;
+      a {
+        color: $dark-purple;
+        @include medium {
+          color: $dark-purple;
+          font-size: 1.125em;
+        }
+      }
+    }
+  }
+  .cta {
+    display: none;
+    @include medium {
+      display: block !important;
+      justify-self: right;
+    }
+    .button:not(.branch) {
+      text-align: left;
+      width: 100%;
+      @include medium {
+        background: $dark-purple;
+        border: 2px solid $dark-purple;
+        text-align: center;
+        width: auto;
+      }
+    }
+    p {
+      display: none;
+    }
+    .form {
+      display: none;
+      @include medium {
+        display: grid;
+        position: absolute;
+        right: 25px;
+      }
+    }
+  }
+}
+
+.open {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding-bottom: 40px;
+}
+
+// styles for the sticky header
+.sticky {
+  .top-navbar {
+    background: $white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    @include medium {
+      animation-name: stickySlideDown;
+    }
+    .menu-items {
+      a {
+        color: $dark-purple;
+      }
+    }
+    .cta {
+      .button {
+        background: $dark-purple;
+        border: 2px solid $dark-purple;
+      }
+      .form {
+        margin-top: 12px;
+      }
+    }
+  }
+}
+
+//styles for the homepage sigup button
+.home .top-navbar {
+  .cta .button:not(.branch) {
+    @include medium {
+      background: transparent;
+      border: 2px solid $white;
+    }
+  }
+  ul li a {
+    @include medium {
+      color: $white;
+    }
+  }
+}
+
+.home .sticky {
+  .cta .button:not(.branch) {
+    background: $dark-purple;
+    border: 2px solid $dark-purple;
+  }
+}

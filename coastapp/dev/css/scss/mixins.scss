@@ -1,0 +1,136 @@
+// Screen size variables
+$screen-smallest-min: 350px;
+$screen-smaller-min: 420px;
+$screen-small-min: 550px;
+
+$screen-medium-min: 768px;
+$screen-mediumish-min: 840px;
+
+$screen-large-min: 945px;
+$screen-larger-min: 1045px;
+$screen-largest-min: 1200px;
+
+$screen-wide-min: 1500px;
+
+@mixin smallest {
+  @media (min-width: #{$screen-smallest-min}) {
+    @content;
+  }
+}
+
+@mixin smaller {
+  @media (min-width: #{$screen-smaller-min}) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media (min-width: #{$screen-small-min}) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media (min-width: #{$screen-medium-min}) {
+    @content;
+  }
+}
+
+@mixin mediumish {
+  @media (min-width: #{$screen-mediumish-min}) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media (min-width: #{$screen-large-min}) {
+    @content;
+  }
+}
+
+@mixin larger {
+  @media (min-width: #{$screen-larger-min}) {
+    @content;
+  }
+}
+
+@mixin largest {
+  @media (min-width: #{$screen-largest-min}) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @media (min-width: #{$screen-wide-min}) {
+    @content;
+  }
+}
+
+@mixin mobile-grid {
+  display: grid;
+  grid-template-columns: 1fr 15fr 15fr 1fr;
+  grid-row-gap: 40px;
+  & > * {
+    grid-column: 2/4;
+  }
+}
+
+@mixin feature-nav-layout {
+  $elements: "h2", ".feature-nav", ".subheadings", "p", "picture";
+  @each $element in $elements {
+    #{$element} {
+      grid-column: 2;
+      @if #{$element} == "feature-nav" {
+        li {
+          display: grid;
+        }
+      }
+    }
+  }
+}
+
+@mixin mobile-testimonial-nav {
+  @for $i from 1 through 4 {
+    li:nth-of-type(#{$i}) {
+      @if $i % 2 == 0 {
+        grid-column: 2;
+      } @else {
+        grid-column: 1;
+      }
+    }
+  }
+}
+
+@mixin in-control-layout {
+  @for $i from 1 through 4 {
+    .description:nth-of-type(#{$i}) {
+      grid-row: $i + 1;
+      @if $i % 2 == 0 {
+        grid-column: 3;
+      } @else {
+        grid-column: 2;
+      }
+    }
+  }
+  @for $i from 1 through 4 {
+    picture:nth-of-type(#{$i}) {
+      grid-row: $i + 1;
+      @if $i % 2 == 0 {
+        grid-column: 2;
+      } @else {
+        grid-column: 3;
+      }
+    }
+  }
+}
+
+@keyframes stickySlideDown {
+  0% {
+    opacity: 0.7;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
