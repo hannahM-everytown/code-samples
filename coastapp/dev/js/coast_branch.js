@@ -28,7 +28,7 @@ import {
 
 const sendPhoneNumberToBranch = () => {
   // Initialize Branch with key
-  branch.init("key_live_jasIykxAEeCslTZfYrsyPlnmCrmjZEn8");
+  branch.init("");
   const branchButton = document.querySelectorAll(".branch:not(.link-sent)");
 
   // handles our input field validation and some error/success handling. See coast_forms.js
