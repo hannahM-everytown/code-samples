@@ -9,6 +9,7 @@
 // Shared global variables
 
 const sharedVariables = {
+  body: document.body,
   overlay: "",
   isAppended: false
 };
@@ -24,9 +25,6 @@ const buildBackDrop = () => {
   // Create backdrop element
   const backDropElement = document.createElement("div");
 
-  // assign body to a variable so we can append the newly created back drop element
-  const body = document.body;
-
   // Add styles
   backDropElement.setAttribute("class", "backdrop");
 
@@ -34,7 +32,7 @@ const buildBackDrop = () => {
   backDropElement.style.display = "none";
 
   // Append the backdrop to the body element
-  body.appendChild(backDropElement);
+  sharedVariables.body.appendChild(backDropElement);
 };
 
 /**
@@ -114,10 +112,10 @@ const buildOverlay = () => {
   // This is our close functionality. After the overlay is built, we need a way to get out of it. So on the X button we created
   // above, we'll set a trigger to listen for a click on that element or the backdrop element and then we'll remove the overlay, and hide the
   // backdrop
-  const closeButton = document.querySelector(".close");
+  const closeButton = document.querySelector(".close"); 
 
   if (closeButton.length !== -1) {
-    closeButton.addEventListener("click", closeOverlay, false);
+    sharedVariables.body.addEventListener("click", closeOverlay, false);  
   }
 };
 
@@ -218,12 +216,13 @@ const addItems = (src, name, quantity, price) => {
  */
 
 const getScrollPosition = () => {
-  const position = scrollPosition(document.body);
+  const position = scrollPosition(sharedVariables.body);
   const roundedPosition = Math.round(position);
   const backdrop = document.querySelector(".backdrop");
 
   if (roundedPosition > 90) {
     buildOverlay();
+    backdrop.style.display = "block";
   }
 };
 
