@@ -9,34 +9,14 @@
 // Shared global variables
 
 const sharedVariables = {
-  body: document.body,
+  cart: document.querySelectorAll(".minicart-empty"),
+  body: document.getElementsByTagName("body")[0],
   overlay: "",
   isAppended: false
 };
 
 /**
- * Build our Backdrop
- *
- * This function will create a new element so that we can use it as a backdrop for our overlay.
- *
- */
-
-const buildBackDrop = () => {
-  // Create backdrop element
-  const backDropElement = document.createElement("div");
-
-  // Add styles
-  backDropElement.setAttribute("class", "backdrop");
-
-  // Display none so that the backdrop is not visible until we need it.
-  backDropElement.style.display = "none";
-
-  // Append the backdrop to the body element
-  sharedVariables.body.appendChild(backDropElement);
-};
-
-/**
- * Build our Overlay
+ * Build our Overlay with Backdrop
  *
  * This is our main Overlay element. We'll create everything on the fly and then set up a trigger for it so that the overlay
  * launches when a user scrolls within 10% of the bottom of the page. See getScrollPosition for how the trigger is set up.
@@ -52,28 +32,24 @@ const buildOverlay = () => {
 
   // Now we can create our overlay
   // Create our overlay elements on the fly
+  const backDropElement = document.createElement("div");  
   const overlayElement = document.createElement("div");
   const overlayHeader = document.createElement("header");
   const closeButtonElement = document.createElement("div");
-  const cartIcon = document.querySelector(".minicart-link ");
-  const cartIconClone = cartIcon.cloneNode(true);
   const overlayBody = document.createElement("div");
   const overlayFooter = document.createElement("footer");
   const numberOfItemsElement = document.createElement("p");
   const cartTotalElement = document.createElement("p");
 
   // Assign existing elements to variables to be used for display and appending
-  const numberOfItems =
-    "Total Items: " +
-    parseInt(
-      document.querySelector(".minicart-quantity").firstChild.textContent
-    );
-  const cartTotal =
-    "Total: " +
-    document.querySelector(".mini-cart-totals .order-value").innerHTML;
+  const cartIcon = document.querySelector(".minicart-link ");
+  const cartIconClone = cartIcon.cloneNode(true);
+  const numberOfItems = "Total Items: " + document.querySelector(".minicart-quantity").firstChild.textContent;
+  const cartTotal = "Total: " + document.querySelector(".mini-cart-totals .order-value").innerHTML;
   const main = document.getElementById("main");
 
-  // set attributes and/or styling
+  // Set attributes and/or styling
+  backDropElement.setAttribute("class", "backdrop");  
   overlayElement.setAttribute("class", "overlay");
   overlayHeader.setAttribute("class", "overlay-header");
   closeButtonElement.setAttribute("class", "close");
@@ -89,13 +65,14 @@ const buildOverlay = () => {
   overlayElement.appendChild(overlayBody);
   overlayElement.appendChild(overlayFooter);
 
+  // Append elements within the overlay
   overlayHeader.appendChild(closeButtonElement);
   overlayHeader.appendChild(cartIconClone);
-
   overlayFooter.appendChild(numberOfItemsElement);
   overlayFooter.appendChild(cartTotalElement);
 
   // Append overlay to the main element
+  sharedVariables.body.appendChild(backDropElement);  
   main.appendChild(overlayElement);
 
   // Here we'll check if the overlay has been added to the DOM.
@@ -106,12 +83,11 @@ const buildOverlay = () => {
     sharedVariables.isAppended = true;
   }
 
-  // Call our displayCartItems to add any cart items to the overlay.
+  // Call our displayCartItems to add and display any cart items to the overlay.
   displayCartItems();
 
-  // This is our close functionality. After the overlay is built, we need a way to get out of it. So on the X button we created
-  // above, we'll set a trigger to listen for a click on that element or the backdrop element and then we'll remove the overlay, and hide the
-  // backdrop
+  // This is our close functionality. After the overlay is built, we need a way to get out of it. So we'll set a trigger 
+  // to listen for a click on the body element and then we'll remove the overlay and hide the backdrop
   const closeButton = document.querySelector(".close"); 
 
   if (closeButton.length !== -1) {
@@ -122,8 +98,8 @@ const buildOverlay = () => {
 /**
  * Close Button Functionality
  *
- * This function handles our close button functionality. When a user clicks on the x button, the overlay and backdrop will
- * close.
+ * This function handles our close button functionality. When a user clicks on the body or close button, the overlay will be removed 
+ * and backdrop will be set to display none.
  *
  */
 
@@ -136,7 +112,8 @@ const closeOverlay = e => {
     e.target.classList.contains("backdrop")
   ) {
     overlay.parentNode.removeChild(overlay);
-    backdrop.style.display = "none";
+    backdrop.parentNode.removeChild(backdrop);
+
     sharedVariables.isAppended = false;
   }
 };
@@ -191,7 +168,6 @@ const addItems = (src, name, quantity, price) => {
   const items = document.querySelector(".items");
 
   // set styling or attributes
-
   itemElement.setAttribute("class", "item");
 
   imageElement.src = src;
@@ -200,7 +176,6 @@ const addItems = (src, name, quantity, price) => {
   priceElement.innerHTML = price;
 
   //Append elements
-
   itemElement.appendChild(imageElement);
   itemElement.appendChild(textElement);
   itemElement.appendChild(quantityElement);
@@ -213,17 +188,28 @@ const addItems = (src, name, quantity, price) => {
  * Get User's Scroll Position
  *
  * This function will get a user's scroll position and then launch our overlay.
+ *
  */
 
-const getScrollPosition = () => {
-  const position = scrollPosition(sharedVariables.body);
-  const roundedPosition = Math.round(position);
-  const backdrop = document.querySelector(".backdrop");
 
-  if (roundedPosition > 90) {
-    buildOverlay();
-    backdrop.style.display = "block";
+
+const getScrollPosition = () => {
+
+  // If a user's shopping cart is empty, the mini-cart-empty class appears within the DOM twice. So we'll check if this
+  // class exists twice, and if true, then we'll return else we continue to execute the rest of the code.
+  if ( sharedVariables.cart.length === 2 ) {
+    return;
+  } else {
+    const position = scrollPosition(sharedVariables.body);
+    const roundedPosition = Math.round(position);
+    const backdrop = document.querySelector(".backdrop");
+
+    if (roundedPosition > 90) {
+      buildOverlay();
+    }    
   }
+
+
 };
 
 /**
@@ -248,7 +234,6 @@ const listeners = () => {
 };
 
 const init = () => {
-  buildBackDrop();
   listeners();
 };
 
