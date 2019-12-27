@@ -9,7 +9,6 @@
 // Shared global variables
 
 const sharedVariables = {
-  cart: document.querySelectorAll(".minicart-empty"),
   body: document.getElementsByTagName("body")[0],
   overlay: "",
   isAppended: false
@@ -195,9 +194,11 @@ const addItems = (src, name, quantity, price) => {
 
 const getScrollPosition = () => {
 
+  const cart = document.querySelectorAll(".minicart-empty");
+
   // If a user's shopping cart is empty, the mini-cart-empty class appears within the DOM twice. So we'll check if this
   // class exists twice, and if true, then we'll return else we continue to execute the rest of the code.
-  if ( sharedVariables.cart.length === 2 ) {
+  if (cart.length === 2) {
     return;
   } else {
     const position = scrollPosition(sharedVariables.body);
