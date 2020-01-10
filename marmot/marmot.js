@@ -169,7 +169,8 @@ const getItems = (src, name, quantity, price) => {
 /**
  * Close Button Functionality
  *
- * This function handles our close button functionality. When a user clicks on the body or close button, the overlay and backdrop will be removed
+ * This function handles our close button functionality. When a user clicks on the body or close button, 
+ * the overlay and backdrop will be removed
  *
  */
 
@@ -189,6 +190,14 @@ const closeOverlay = e => {
   }
 
 };
+
+/**
+ * Add Styles for Overlay and Backdrop
+ *
+ * Create a style script with CSS styles for our overlay. This style tag will be appended to the head of the document
+ * after the page loads.
+ *
+ */
 
 const addOverlayStyles = () => {
   const head = document.getElementsByTagName("head")[0],
@@ -251,6 +260,8 @@ const overlayInit = () => {
     return;
   }
 
+  // Call to buildOverlay to create and append all components of overlay
+
   buildOverlay();
 
   // Here we'll check if the overlay has been added to the DOM.
@@ -266,8 +277,7 @@ const overlayInit = () => {
 
   displayCartItems();
 
-  // This is our close functionality. After the overlay is built, we need a way to get out of it. So we'll set a trigger 
-  // to listen for a click on the body element and then we'll remove the overlay and the backdrop
+  // Call to closeButton so we can close the overlay
 
   const closeButton = document.querySelector(".close"); 
 
@@ -280,7 +290,7 @@ const overlayInit = () => {
 /**
  * Get User's Scroll Position
  *
- * This function will get a user's scroll position and then launch our overlay.
+ * This function will get a user's scroll position and then makes a call overlayInit to launch our overlay.
  *
  */
 
