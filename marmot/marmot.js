@@ -23,36 +23,39 @@ const sharedVariables = {
  */
 
 const buildOverlay = () => {
-
   // Create our overlay components on the fly
 
   const backDropElement = document.createElement("div"),
-  overlayElement = document.createElement("div"),
-  overlayHeader = document.createElement("header"),
-  closeButtonElement = document.createElement("button"),
-  headingElement = document.createElement("h3");
-  editElement = document.createElement("a");  
-  overlayBody = document.createElement("div"),
-  overlayFooter = document.createElement("footer"),
-  numberOfItemsElement = document.createElement("p"),
-  cartTotalElement = document.createElement("p");
+    overlayElement = document.createElement("div"),
+    overlayHeader = document.createElement("header"),
+    closeButtonElement = document.createElement("button"),
+    headingElement = document.createElement("h3");
+  editElement = document.createElement("a");
+  (overlayBody = document.createElement("div")),
+    (overlayFooter = document.createElement("footer")),
+    (numberOfItemsElement = document.createElement("p")),
+    (cartTotalElement = document.createElement("p"));
 
   // Assign existing elements to variables to be used for display and appending
 
   const cartIcon = document.querySelector(".minicart-link "),
-  numberOfItems = "Total Items: " + document.querySelector(".minicart-quantity").firstChild.textContent,
-  cartTotal = "Total: " + document.querySelector(".mini-cart-totals .order-value").innerHTML,
-  main = document.getElementById("main");
+    numberOfItems =
+      "Total Items: " +
+      document.querySelector(".minicart-quantity").firstChild.textContent,
+    cartTotal =
+      "Total: " +
+      document.querySelector(".mini-cart-totals .order-value").innerHTML,
+    main = document.getElementById("main");
 
   // Set attributes
 
   backDropElement.setAttribute("class", "backdrop");
   overlayElement.setAttribute("class", "overlay");
-  overlayElement.setAttribute("role", "dialog");  
+  overlayElement.setAttribute("role", "dialog");
 
   overlayHeader.setAttribute("class", "overlay-header mini-cart-header");
   editElement.setAttribute("href", "/cart");
-  editElement.setAttribute("class", "primary-link");  
+  editElement.setAttribute("class", "primary-link");
 
   closeButtonElement.setAttribute("class", "close");
   overlayBody.setAttribute("class", "overlay-body items");
@@ -69,21 +72,20 @@ const buildOverlay = () => {
   // Append elements within the overlay
 
   overlayElement.appendChild(overlayHeader);
-  overlayElement.appendChild(overlayBody);  
+  overlayElement.appendChild(overlayBody);
   overlayElement.appendChild(overlayFooter);
 
   overlayHeader.appendChild(headingElement);
-  overlayHeader.appendChild(editElement);   
+  overlayHeader.appendChild(editElement);
   overlayHeader.appendChild(closeButtonElement);
 
   overlayFooter.appendChild(numberOfItemsElement);
   overlayFooter.appendChild(cartTotalElement);
 
-  // Append overlay and backdrop to the main and body elements 
+  // Append overlay and backdrop to the main and body elements
 
   main.appendChild(overlayElement);
   sharedVariables.body.appendChild(backDropElement);
-
 };
 
 /**
@@ -94,7 +96,6 @@ const buildOverlay = () => {
  */
 
 const displayCartItems = () => {
-
   // Select all children of .mini-cart-products element, which contains our cart items
 
   const products = document.querySelector(".mini-cart-products").children;
@@ -104,16 +105,14 @@ const displayCartItems = () => {
   const arr = [].slice.call(products);
 
   arr.forEach(elem => {
-
     const thumbsSrc = elem.querySelector(".mini-cart-image a img").src,
-    itemName = elem.querySelector(".mini-cart-name a").innerHTML,
-    itemQuantity = elem.querySelector(".mini-cart-pricing .quantity .value").innerHTML,
-    itemPrice = elem.querySelector(".mini-cart-pricing .price").innerHTML;
+      itemName = elem.querySelector(".mini-cart-name a").innerHTML,
+      itemQuantity = elem.querySelector(".mini-cart-pricing .quantity .value")
+        .innerHTML,
+      itemPrice = elem.querySelector(".mini-cart-pricing .price").innerHTML;
 
     getItems(thumbsSrc, itemName, itemQuantity, itemPrice);
-
   });
-
 };
 
 /**
@@ -130,18 +129,16 @@ const displayCartItems = () => {
  */
 
 const getItems = (src, name, quantity, price) => {
-
   // Create elements on the fly
 
   const itemElement = document.createElement("div"),
-  imageElement = document.createElement("img"),
-  textElement = document.createElement("p"),
-  quantityElement = document.createElement("p"),
-  priceElement = document.createElement("p"),
+    imageElement = document.createElement("img"),
+    textElement = document.createElement("p"),
+    quantityElement = document.createElement("p"),
+    priceElement = document.createElement("p"),
+    // Assign existing elements to variables
 
-  // Assign existing elements to variables
-
-  items = document.querySelector(".items");
+    items = document.querySelector(".items");
 
   // Set attributes
 
@@ -163,19 +160,17 @@ const getItems = (src, name, quantity, price) => {
 
   items.appendChild(itemElement);
   sharedVariables.isAppended = true;
-
 };
 
 /**
  * Close Button Functionality
  *
- * This function handles our close button functionality. When a user clicks on the body or close button, 
+ * This function handles our close button functionality. When a user clicks on the body or close button,
  * the overlay and backdrop will be removed
  *
  */
 
 const closeOverlay = e => {
-
   overlay = document.querySelector(".overlay");
   backdrop = document.querySelector(".backdrop");
 
@@ -188,7 +183,6 @@ const closeOverlay = e => {
 
     sharedVariables.isAppended = false;
   }
-
 };
 
 /**
@@ -201,9 +195,8 @@ const closeOverlay = e => {
 
 const addOverlayStyles = () => {
   const head = document.getElementsByTagName("head")[0],
-  style = document.createElement("style"),
-  css =
-    `.backdrop {
+    style = document.createElement("style"),
+    css = `.backdrop {
       background: #000;
       height: 100%;
       left: 0;
@@ -244,18 +237,16 @@ const addOverlayStyles = () => {
   style.type = "text/css";
   style.appendChild(document.createTextNode(css));
   head.appendChild(style);
-
 };
 
- /**
+/**
  * Initialize Overlay
  *
  */
 
 const overlayInit = () => {
-
   // We'll use a boolean flag to detect whether or not the overlay has been created. We start off with false and return.
-  
+
   if (sharedVariables.isAppended) {
     return;
   }
@@ -272,19 +263,18 @@ const overlayInit = () => {
   if (overlay.length === 1) {
     sharedVariables.isAppended = true;
   }
-  
+
   // Call our displayCartItems to add and display any cart items to the overlay.
 
   displayCartItems();
 
   // Call to closeButton so we can close the overlay
 
-  const closeButton = document.querySelector(".close"); 
+  const closeButton = document.querySelector(".close");
 
   if (closeButton.length !== -1) {
-    sharedVariables.body.addEventListener("click", closeOverlay, false);  
+    sharedVariables.body.addEventListener("click", closeOverlay, false);
   }
-
 };
 
 /**
@@ -295,7 +285,6 @@ const overlayInit = () => {
  */
 
 const getScrollPosition = () => {
-
   const emptyCart = document.querySelectorAll(".minicart-empty");
 
   // If a user's shopping cart is empty, the mini-cart-empty class appears within the DOM twice. So we'll check if this
@@ -305,11 +294,11 @@ const getScrollPosition = () => {
     return;
   } else {
     const position = scrollPosition(sharedVariables.body),
-    roundedPosition = Math.round(position);
+      roundedPosition = Math.round(position);
 
     if (roundedPosition > 90) {
       overlayInit();
-    }    
+    }
   }
 };
 
@@ -322,10 +311,10 @@ const getScrollPosition = () => {
 
 const scrollPosition = b => {
   const parent = b.parentNode,
-  position =
-    ((b.scrollTop || parent.scrollTop) /
-      (parent.scrollHeight - parent.clientHeight)) *
-    100;
+    position =
+      ((b.scrollTop || parent.scrollTop) /
+        (parent.scrollHeight - parent.clientHeight)) *
+      100;
 
   return position;
 };
