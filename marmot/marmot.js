@@ -23,6 +23,7 @@ const sharedVariables = {
  */
 
 const buildOverlay = () => {
+
   // Create our overlay components on the fly
 
   const backDropElement = document.createElement("div"),
@@ -30,8 +31,8 @@ const buildOverlay = () => {
     overlayHeader = document.createElement("header"),
     closeButtonElement = document.createElement("button"),
     headingElement = document.createElement("h3");
-  editElement = document.createElement("a");
-  (overlayBody = document.createElement("div")),
+  (editElement = document.createElement("a")),
+    (overlayBody = document.createElement("div")),
     (overlayFooter = document.createElement("footer")),
     (numberOfItemsElement = document.createElement("p")),
     (cartTotalElement = document.createElement("p"));
@@ -98,11 +99,11 @@ const buildOverlay = () => {
 const displayCartItems = () => {
   // Select all children of .mini-cart-products element, which contains our cart items
 
-  const products = document.querySelector(".mini-cart-products").children;
+  const products = document.querySelector(".mini-cart-products").children,
 
-  // products is an HTML Collection so we need to convert it to an array so we can loop through it
+    // products is an HTML Collection so we need to convert it to an array so we can loop through it
 
-  const arr = [].slice.call(products);
+    arr = [].slice.call(products);
 
   arr.forEach(elem => {
     const thumbsSrc = elem.querySelector(".mini-cart-image a img").src,
@@ -171,16 +172,15 @@ const getItems = (src, name, quantity, price) => {
  */
 
 const closeOverlay = e => {
+  const backdrop = document.querySelector(".backdrop");  
   overlay = document.querySelector(".overlay");
-  backdrop = document.querySelector(".backdrop");
 
   if (
     e.target.classList.contains("close") ||
     e.target.classList.contains("backdrop")
   ) {
-    overlay.parentNode.removeChild(overlay);
     backdrop.parentNode.removeChild(backdrop);
-
+    overlay.parentNode.removeChild(overlay);  
     sharedVariables.isAppended = false;
   }
 };
@@ -245,6 +245,7 @@ const addOverlayStyles = () => {
  */
 
 const overlayInit = () => {
+
   // We'll use a boolean flag to detect whether or not the overlay has been created. We start off with false and return.
 
   if (sharedVariables.isAppended) {
@@ -296,7 +297,12 @@ const getScrollPosition = () => {
     const position = scrollPosition(sharedVariables.body),
       roundedPosition = Math.round(position);
 
+    // Check if we're over 90% of the page
+
     if (roundedPosition > 90) {
+
+      // Launch overlay
+      
       overlayInit();
     }
   }
@@ -306,6 +312,7 @@ const getScrollPosition = () => {
  * Calculate scroll position
  *
  * @returns {number}
+ * @param {b} body
  *
  */
 
