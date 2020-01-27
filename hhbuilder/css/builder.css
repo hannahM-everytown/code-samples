@@ -1,0 +1,54 @@
+body {
+	color: #281e38;
+	font-family: "Source Sans Pro";
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.instructions {
+  text-transform: none;
+}
+
+.input-wrapper {
+  margin-bottom: 10px;
+}
+.button-wrapper {
+  margin-bottom: 5px;
+}
+
+input[name=age], select[name=rel] {
+  background: lavender;
+  border: 0;
+  border-radius: 7px;
+  height: 30px;
+  width:200px;
+}
+
+.error {
+	color: #d85c71;
+	font-size: 12px;
+  text-transform: none;
+}
+
+button {
+	background: #281e38;
+	border: 1px solid #281e38;
+	border-radius: 7px;
+	color: #fff;
+	cursor: pointer;
+	padding:7px 10px;
+	text-transform: capitalize;
+}
+
+.button-wrapper:not(:last-of-type) {
+	display: inline-block;
+}
+
+.edit-table tbody tr:hover {
+	color: #29663d;
+	cursor: pointer;
+}
+
+.edit-table .active td {
+	color: #29663d;
+}
