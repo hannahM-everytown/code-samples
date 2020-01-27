@@ -97,6 +97,7 @@ const buildOverlay = () => {
  */
 
 const displayCartItems = () => {
+
   // Select all children of .mini-cart-products element, which contains our cart items
 
   const products = document.querySelector(".mini-cart-products").children,
@@ -130,6 +131,7 @@ const displayCartItems = () => {
  */
 
 const getItems = (src, name, quantity, price) => {
+
   // Create elements on the fly
 
   const itemElement = document.createElement("div"),
@@ -137,6 +139,7 @@ const getItems = (src, name, quantity, price) => {
     textElement = document.createElement("p"),
     quantityElement = document.createElement("p"),
     priceElement = document.createElement("p"),
+    
     // Assign existing elements to variables
 
     items = document.querySelector(".items");
