@@ -7,7 +7,7 @@
 
 // We'll set form as a global object so that we can access it and it's fields throughout the script
 const theForm = {
-  form: document.querySelector("form"),
+  form: document.getElementsByTagName("form")[0],
   age: document.querySelector("input[name=age]"),
   relationship: document.querySelector("select[name=rel]"),
   smoker: document.querySelector("input[type=checkbox]")
@@ -18,16 +18,14 @@ const setupBuilder = () => {
   const body = document.getElementsByTagName("body")[0],
     builder = body.querySelector(".builder"),
     fields = builder.querySelectorAll("div"),
-    addButton = builder.querySelector(".add");
+    addButton = builder.querySelector(".add"),
+    instructionsElement = document.createElement("p");
 
-  theForm.form.className = "form";
-
-  let instructions = document.createElement("p");
-  instructions.className = "instructions";
-  instructions.innerHTML =
+  instructionsElement.className = "instructions";
+  instructionsElement.innerHTML =
     "Add members of your household into the form below. Once completed, submit the form";
-  body.insertBefore(instructions, builder);
-
+  body.insertBefore(instructionsElement, builder);
+  theForm.form.className = "form";
   addButton.type = "button";
 
   let i = 0;
@@ -40,17 +38,15 @@ const setupBuilder = () => {
     } else {
       field.className = "input-wrapper";
 
-      if (i !== 3) {
-        const span = document.createElement("span");
-        span.style.display = "none";
-        span.className = "error";
-        field.appendChild(span);
-      }
+      const spanElement = document.createElement("span");
+      spanElement.style.display = i === 3 ? "block" : "none";
+      spanElement.className = i === 3 ? "checkmark" : "error";
+      field.firstElementChild.appendChild(spanElement);
     }
   }
 };
 
-// We need to watch for user input on the form fields so that we can add validation on the age and relationship fields
+// We need to watch for user input on the age and relationship fields so that we can add validation
 const watchForInput = e => {
   const input = e.target,
     errorMessage = input.parentNode.parentNode.querySelector(".error");
@@ -62,7 +58,8 @@ const watchForInput = e => {
   }
 };
 
-const validateForm = (age, relationship) => {
+// Our form validation. We'll return an array to detect errors
+const validateForm = () => {
   const inputWrappers = document.querySelectorAll(".input-wrapper");
   let i = 0,
     isError = false,
@@ -74,25 +71,29 @@ const validateForm = (age, relationship) => {
 
     // Of the three input-wrapper fields, we only have to validate the age and relationship fields so we can excude
     // the smoker field right away
-
     if (i !== 3) {
       // age field
       if (i === 1) {
-        if (age.value <= 0 || age.value === "" || isNaN(age.value)) {
+        if (
+          theForm.age.value <= 0 ||
+          theForm.age.value === "" ||
+          isNaN(theForm.age.value)
+        ) {
           error.style.display = "block";
           error.innerHTML = "Please enter a valid age";
           isError = true;
           errorArr.push(isError);
-          age.addEventListener("keyup", watchForInput);
+          theForm.age.addEventListener("keyup", watchForInput);
         }
+
         // relationship field
       } else if (i === 2) {
-        if (relationship.value === "") {
+        if (theForm.relationship.value === "") {
           error.style.display = "block";
           error.innerHTML = "Please select a relationship";
           isError = true;
           errorArr.push(isError);
-          relationship.addEventListener("change", watchForInput);
+          theForm.relationship.addEventListener("change", watchForInput);
         }
       }
     }
@@ -121,16 +122,15 @@ const createTable = () => {
     </tbody>`;
 };
 
-// This function allows us to add new rows with household members's information.
+// This function allows us to add new rows with household members' information.
 const addRow = () => {
-  const table = document.querySelectorAll("table"),
-    addButton = document.querySelector(".add"),
-    editView = document.querySelectorAll(".edit-view");
+  const table = document.querySelectorAll("table");
 
   if (table.length === 0) {
     createTable();
   }
 
+  // Our Person object to build out the body, table rows and table data with household members' information
   function Person(age, relationship, smoker) {
     this.age = age.value;
     this.relationship = relationship.value;
@@ -152,7 +152,7 @@ const addRow = () => {
   theForm.form.reset();
 };
 
-// Here we can update household members' information after we submit the form.
+// Here we'll give a user the chance to update household members' information after they submit the form.
 const updateRow = button => {
   let activeRow = button.parentNode.parentNode.parentNode.querySelector(
       ".active"
@@ -170,10 +170,15 @@ const updateRow = button => {
   activeRow.classList.remove("active");
 };
 
+const deleteRow = () => {};
+
+// If a user needs to edit the form, this function will allow them to click on a household member and display that
+// info back in the form fields so they can be updated.
 const setupTableToEdit = table => {
   const editHouseholdButton = document.createElement("button");
 
   const tableBodyRows = table.querySelectorAll("tbody tr"),
+    deleteButton = document.createElement("button"),
     addButton = theForm.form.querySelector(".add"),
     updateButton = addButton;
 
@@ -185,6 +190,10 @@ const setupTableToEdit = table => {
   theForm.form.style.display = "none";
 
   editHouseholdButton.addEventListener("click", function() {
+    let editInstructions = document.querySelector(".instructions");
+    editInstructions.innerHTML =
+      "Click on a household member in order to update their information. You may also add or delete individuals.";
+
     theForm.form.style.display = "block";
     table.parentNode.classList.add("edit-view");
     table.classList.add("edit-table");
@@ -198,10 +207,6 @@ const setupTableToEdit = table => {
   for (let tableBodyRow of tableBodyRows) {
     tableBodyRow.addEventListener("click", function() {
       if (table.classList.contains("edit-table")) {
-        let editInstructions = document.querySelector(".instructions");
-        editInstructions.innerHTML =
-          "Click on a household member in order to update their information. You may also add or delete individuals.";
-
         let activeClasses = table.querySelectorAll(".active");
 
         for (let activeClass of activeClasses) {
@@ -209,6 +214,9 @@ const setupTableToEdit = table => {
         }
 
         this.className = "active";
+        console.log(tableBodyRow);
+
+        // delete button
 
         updateButton.className = "update";
         updateButton.innerHTML = "update";
@@ -239,19 +247,20 @@ const submitHousehold = e => {
   // console.log(JSON.stringify(debug))
   // debug.innerHTML = "hello";
 
-  let submitInstructions = document.querySelector(".instructions");
-  submitInstructions.innerHTML =
+  let instructions = document.querySelector(".instructions");
+  instructions.innerHTML =
     "Thank you for submitting your household. If you need to edit your submission, click on Edit Household below.";
 
   theForm.form.reset();
   setupTableToEdit(table);
 };
 
-// Initialize the builder module. We'll determine if we're in our edit view and if not, we can add a new member
-const builderInit = () => {
+// Handle the builder form. We'll determine if we're in our edit view so we can update household members and if not,
+// we can add a new member
+const formFunctionality = () => {
   const buttons = theForm.form.getElementsByTagName("button");
 
-  if (validateForm(theForm.age, theForm.relationship).includes(true)) {
+  if (validateForm().includes(true)) {
     return;
   } else {
     for (let button of buttons) {
@@ -269,7 +278,7 @@ const listeners = () => {
   const addButton = theForm.form.querySelector(".add"),
     submitButton = theForm.form.querySelector("button[type=submit]");
 
-  addButton.addEventListener("click", builderInit, false);
+  addButton.addEventListener("click", formFunctionality, false);
   submitButton.addEventListener("click", submitHousehold, false);
 };
 
@@ -292,10 +301,10 @@ const addStyleLinks = () => {
 };
 
 // Initialize the Builder module.
-const init = () => {
+const builderInit = () => {
   setupBuilder();
   listeners();
   addStyleLinks();
 };
 
-init();
+builderInit();
