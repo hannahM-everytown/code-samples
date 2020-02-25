@@ -1,0 +1,56 @@
+body {
+	color: #281e38;
+	font-family: 'Source Sans Pro';
+}
+
+h4 {
+	margin: 0;
+}
+
+h5 {
+	margin-bottom: 0;
+	margin-top: 5px;
+}
+
+#city-select {
+  background: lavender;	
+  border: 0;
+  border-radius: 5px;  
+  height: 40px;
+  font-size: 14px;  
+	width: 200px;
+}
+
+#forecast {
+	display: flex;
+	justify-content: center;
+}
+
+.weekly-forecast {
+	display: flex;
+	list-style: none;
+	padding: 0;
+}
+
+.weekly-forecast li {
+	padding: 10px 0 10px 0;
+	width: 10%;
+}
+
+.weekly-forecast li:not(:first-of-type) {
+	padding-left: 10px;
+}
+
+.weekly-forecast li:not(:last-of-type) {
+	border-right: 1px solid #281e38;
+	padding-right: 10px;
+}
+
+.day {
+  align-items: center;	
+  display: flex;
+  flex-direction: column;
+}
+
+
+
