@@ -22,14 +22,25 @@ h5 {
 }
 
 #forecast {
+  border: 1px solid #281e38;
   display: flex;
-  justify-content: center;
+  justify-content: center;  
+}
+
+.darkmode #forecast {
+  border: 5px solid lavender;
 }
 
 .weekly-forecast {
   display: flex;
   list-style: none;
+  margin: 0;
   padding: 0;
+}
+
+.darkmode .weekly-forecast {
+  background: #281e38;
+  color: #fff;
 }
 
 .weekly-forecast li {
@@ -37,17 +48,22 @@ h5 {
   width: 10%;
 }
 
-.weekly-forecast li:not(:first-of-type) {
+.weekly-forecast li {
   padding-left: 10px;
 }
 
 .weekly-forecast li:not(:last-of-type) {
   border-right: 1px solid #281e38;
-  padding-right: 10px;
+  padding-right: 10px;  
+}
+
+.darkmode .weekly-forecast li:not(:last-of-type) {
+  border-right: 1px solid #fff;
 }
 
 .day {
   align-items: center;  
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 }
