@@ -1,12 +1,12 @@
 /**
  * Weather Code Challenge
  *
- * This code challenge uses a jsonp callback function to display data from an external weather data source.
+ * This code challenge uses a jsonp callback function to retrieve data from an external weather data source.
  *
  */
 
-// This is our jsonp callback function. We'll call our populateCityData here so that we can display
-// our content
+// This is our jsonp callback function. We'll call our populateCityData here so that we can display data from the 
+// source's cities object.
 
 const hdnWeatherJsonpCallback = data => {
   const body = document.getElementsByTagName("body")[0],
@@ -19,6 +19,8 @@ const hdnWeatherJsonpCallback = data => {
     forecast = document.getElementById("forecast"),
     weekly = forecast.querySelector(".weekly-forecast");
 
+  // loop through our object to get data for each city
+
   for (let city of cities) {
     const selectOption = document.createElement("option");
 
@@ -30,15 +32,18 @@ const hdnWeatherJsonpCallback = data => {
       populateCityData(subheading, currentTemp, currentCond, city, weekly);
     }
 
-    citySelect.addEventListener("change", function() {
+   // We'll need to check if a user selects a new city so we can add an event listener for that 
 
+    citySelect.addEventListener("change", function() {
       if (citySelect.value === city.geoloc.city) {
         selectOption.setAttribute("selected", true);
+
+        // Check if the data is already populated. If it is, empty it out so we can populate another city's data if a user 
+        // selects another city
 
         if (weekly.innerHTML !== "") {
           weekly.innerHTML = "";
         }
-
         populateCityData(subheading, currentTemp, currentCond, city, weekly);
       }
     });
@@ -48,10 +53,13 @@ const hdnWeatherJsonpCallback = data => {
 // This function will grab the jsonp data. We need this in two locations so we'll create a function for it.
 
 const populateCityData = (subheading, temp, condition, city, week) => {
-  subheading.innerHTML = `${city.geoloc.city} - Current Conditions: `;
 
+  // This takes care of the selected city's current conditions
+  subheading.innerHTML = `${city.geoloc.city} - Current Conditions: `;
   temp.innerHTML = `${city.current[0].temp}&#176;`;
   condition.innerHTML = `${city.current[0].condition}`;
+
+  // Here we'll retrieve a city's weekly information from our cities object
 
   for (let day of city.weekly) {
     let weeklyListItem = document.createElement("li"),
