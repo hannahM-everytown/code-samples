@@ -1,5 +1,5 @@
 body {
-  color: #281e38;
+  color: #001a66;
   display:flex;
   font-family: 'Source Sans Pro';
 }
@@ -27,7 +27,7 @@ p {
 }
 
 #city-select {
-  background: lavender; 
+  background: #eff3ff; 
   border: 0;
   border-radius: 5px;  
   height: 40px;
@@ -42,7 +42,7 @@ p {
 }
 
 .darkmode #forecast {
-  border: 5px solid lavender;
+  border: 5px solid #eff3ff;
 }
 
 .weekly-forecast {
@@ -51,11 +51,11 @@ p {
   list-style: none;
   margin: 0;
   max-width: 1200px;
-  padding: 20px 0;
+  padding: 0;
 }
 
 .darkmode .weekly-forecast {
-  background: #281e38;
+  background: #001a66;
   color: #fff;
 }
 
@@ -69,7 +69,7 @@ p {
 }
 
 .weekly-forecast li:not(:last-of-type) {
-  border-right: 1px solid #281e38;
+  border-right: 1px solid #001a66;
   padding-right: 10px;  
 }
 
@@ -85,9 +85,10 @@ p {
 }
 
 .today {
-  background: lavender;
-  border: 1px solid;
-  zoom: 110%;
+  background: #eff3ff;
+  border: 0;
+  color: #001a66;
+  zoom: 115%;
 }
 .today:not(:first-of-type) {
   border-left: 0;
