@@ -4,26 +4,28 @@
  * This code challenge uses a jsonp callback function to retrieve data from an external weather data source.
  */
 
-// This function will grab the weather data. We need this in two locations so we'll create a function for it.
+// This code will grab data within the cities object from our external source. We need this in two locations
+// so we'll create a function for it.
 
 const populateCityData = (subheading, temp, condition, city, week) => {
 
-  // This takes care of the selected city's current conditions
+  // This takes care of the selected city's current weather conditions
   subheading.innerHTML = `${city.geoloc.city}`;
   temp.innerHTML = `${city.current[0].temp}&#176;F`;
   condition.innerHTML = `${city.current[0].condition}`;
 
-  // Here we'll retrieve a city's weekly information from the cities object
+  // Here we'll retrieve a city's weekly information from the cities object. We'll create some elements on the fly
+  // to contain this data and add it to the DOM.
   for (let day of city.weekly) {
     let weeklyListItem = document.createElement("li"),
       dayOfTheWeekContainer = document.createElement("div"),
       dayOfTheWeekHeading = document.createElement("h4"),
-      lowHighHeading = document.createElement("h5"),
+      dayOfTheWeekLowHighHeading = document.createElement("h5"),
       dayOfTheWeekConditions = document.createElement("p");
 
     dayOfTheWeekContainer.className = "day";
     dayOfTheWeekHeading.innerHTML = `${day.day} ${day.date}`;
-    lowHighHeading.innerHTML = `${day.low}&#176;/${day.high}&#176;`;
+    dayOfTheWeekLowHighHeading.innerHTML = `${day.low}&#176;/${day.high}&#176;`;
 
     // Handle our daymode/darkmode needs
     const darkmode = document.querySelectorAll(".darkmode");
@@ -32,7 +34,7 @@ const populateCityData = (subheading, temp, condition, city, week) => {
     dayOfTheWeekConditions.innerHTML = condition;
 
     dayOfTheWeekContainer.appendChild(dayOfTheWeekHeading);
-    dayOfTheWeekContainer.appendChild(lowHighHeading);
+    dayOfTheWeekContainer.appendChild(dayOfTheWeekLowHighHeading);
     dayOfTheWeekContainer.appendChild(dayOfTheWeekConditions);
 
     weeklyListItem.appendChild(dayOfTheWeekContainer);
@@ -59,17 +61,18 @@ const dateAndTimeConfig = (body, content) => {
     body.classList.add("darkmode");
   }
 
-  // Add the full date to the page
+  // Add the full date to the DOM. We'll also use the toLocaleDateString method in order to convert our date to
+  // long format.
   fullDateHeading.className = "full-date";
   fullDateHeading.innerHTML = date.toLocaleDateString("en-US", options);
 
-  // Count number of h3 headings. If we have 1, add the full date subheading.
+  // Count number of h3 headings. If we have only 1, add the full date h3 heading to the DOM.
   if (thirdSubHeading.length === 1) {
     content.insertBefore(fullDateHeading, content.querySelector("#current"));
   }
 
   // We need to match today's day of the month with the day of the month within the weekly weather conditions
-  // so that we can style the current day differently than other days.
+  // so that we can style the current day differently than the other days.
   const currentDayOfMonth = fullDateHeading.innerText
     .split(",")[1]
     .split(" ")[2];
@@ -81,29 +84,31 @@ const dateAndTimeConfig = (body, content) => {
   }
 };
 
-// This is our jsonp callback function. We'll call our populateCityData here so that we can display data from the cities object.
-// We'll also call dateAndTimeConfig so that we can make configurations around the date and time.
+// This is our jsonp callback function. We'll call our populateCityData here so that we can display data
+// from the cities object. We'll also call dateAndTimeConfig so that we can make configurations around the date and time.
 
 const hdnWeatherJsonpCallback = data => {
   const cities = data.cities,
     body = document.getElementsByTagName("body")[0],
     citySelect = document.getElementById("city-select"),
     subheading = document.querySelector("h2"),
-    content = document.getElementById("content"),
     current = document.getElementById("current"),
     currentTemp = current.querySelector(".current-temp"),
     currentCond = current.querySelector(".current-cond"),
-    weeklyForecast = document.querySelector(".weekly-forecast");
+    content = document.getElementById("content"),    
+    weeklyForecast = content.querySelector(".weekly-forecast");
 
   // loop through the cities object to get data for each city
   for (let city of cities) {
     const selectOption = document.createElement("option");
 
     selectOption.innerHTML = city.geoloc.city;
+    selectOption.value = city.geoloc.city;
     citySelect.appendChild(selectOption);
 
+    // Sets up our first city to be Palo Alto
     if (city.geoloc.city === "Palo Alto") {
-      selectOption.setAttribute("selected", true);
+      selectOption.selected = "selected";
       populateCityData(
         subheading,
         currentTemp,
@@ -112,11 +117,12 @@ const hdnWeatherJsonpCallback = data => {
         weeklyForecast
       );
     }
+    dateAndTimeConfig(body, content);
 
     // We'll need to check if a user selects a new city so we can add an event listener for that
     citySelect.addEventListener("change", function() {
       if (citySelect.value === city.geoloc.city) {
-        selectOption.setAttribute("selected", true);
+        // selectOption.selected = "selected";
 
         // Check if the data is already populated. If it is, empty it out so we can populate another city's data when a user
         // selects another city
@@ -134,7 +140,6 @@ const hdnWeatherJsonpCallback = data => {
       }
     });
   }
-  dateAndTimeConfig(body, content);
 };
 
 // Here we'll create a script tag for the jsonp source so we can use the callback function to access the data
