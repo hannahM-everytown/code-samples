@@ -5,6 +5,82 @@
  *
  */
 
+// This function will grab the jsonp data. We need this in two locations so we'll create a function for it.
+
+const populateCityData = (subheading, temp, condition, city, week) => {
+
+  // This takes care of the selected city's current conditions
+  subheading.innerHTML = `${city.geoloc.city}`;
+  temp.innerHTML = `${city.current[0].temp}&#176;F`;
+  condition.innerHTML = `${city.current[0].condition}`;
+
+  // Here we'll retrieve a city's weekly information from the cities object
+  for (let day of city.weekly) {
+    let weeklyListItem = document.createElement("li"),
+      dayOfTheWeekContainer = document.createElement("div"),
+      dayOfTheWeekHeading = document.createElement("h4"),
+      lowHighHeading = document.createElement("h5"),
+      dayOfTheWeekConditions = document.createElement("p");
+
+    dayOfTheWeekContainer.className = "day";
+    dayOfTheWeekHeading.innerHTML = `${day.day} ${day.date}`;
+    lowHighHeading.innerHTML = `${day.low}&#176;/${day.high}&#176;`;
+
+    // Handle our daymode/darkmode needs
+    const darkmode = document.querySelectorAll(".darkmode");
+    let condition = darkmode.length === 0 ? day.daycondition : day.nightcondition;
+    dayOfTheWeekConditions.innerHTML = condition;
+
+    dayOfTheWeekContainer.appendChild(dayOfTheWeekHeading);
+    dayOfTheWeekContainer.appendChild(lowHighHeading);
+    dayOfTheWeekContainer.appendChild(dayOfTheWeekConditions);
+
+    weeklyListItem.appendChild(dayOfTheWeekContainer);
+    week.appendChild(weeklyListItem);
+  }
+};
+
+// Set some configurations for the date and time of day
+const dateAndTimeConfig = (body, content) => {
+
+  const date = new Date(),
+    options = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    },
+    hour = date.getHours(),
+    dateOfDate = date.getDate(),
+    fullDateHeading = document.createElement("h3"),
+    dayOfMonthHeadings = document.querySelectorAll("li .day h4"),
+    thirdSubHeading = content.querySelectorAll("h3");
+
+  if (hour >= 20 || hour <= 7) {
+    body.classList.add("darkmode");
+  }
+
+  // Add the full date to the page
+  fullDateHeading.className = "full-date";
+  fullDateHeading.innerHTML = date.toLocaleDateString('en-US', options);
+
+  // Count number of h3 headings. If we have only, add the full date subheading.
+  if (thirdSubHeading.length === 1) {
+    content.insertBefore(fullDateHeading, content.querySelector("#current"));    
+  }
+
+  // We need to match today's day of the month with the day of the month within the weekly weacher conditions 
+  // so that we can style the current day differently than other days.
+  const currentDayOfMonth = fullDateHeading.innerText.split(",")[1].split(" ")[2];  
+
+  for (let day of dayOfMonthHeadings) {
+    if (currentDayOfMonth === day.innerText.split(" ")[2]) {
+      day.parentNode.parentNode.classList.add("today");
+    }
+  }
+
+};
+
 // This is our jsonp callback function. We'll call our populateCityData here so that we can display data from the 
 // source's cities object.
 
@@ -14,14 +90,11 @@ const hdnWeatherJsonpCallback = data => {
     cities = data.cities,
     citySelect = document.getElementById("city-select"),
     subheading = document.querySelector("h2"),
+    content = document.getElementById("content"),    
     current = document.getElementById("current"),
     currentTemp = current.querySelector(".current-temp"),
     currentCond = current.querySelector(".current-cond"),
-    forecast = document.getElementById("forecast"),
-    weeklyForecast = forecast.querySelector(".weekly-forecast");
-
-  // Get the hour of the day so we can check if we need to add darkmode
-  getHourOfDay(body);  
+    weeklyForecast = document.querySelector(".weekly-forecast");
 
   // loop through our object to get data for each city
   for (let city of cities) {
@@ -45,56 +118,12 @@ const hdnWeatherJsonpCallback = data => {
         if (weeklyForecast.innerHTML !== "") {
           weeklyForecast.innerHTML = "";
         }
-        populateCityData(subheading, currentTemp, currentCond, city, weeklyForecast);
+        populateCityData(subheading, currentTemp, currentCond, city, weeklyForecast);           
+        dateAndTimeConfig(body, content);              
       }
     });
-  }
-};
-
-// This function will grab the jsonp data. We need this in two locations so we'll create a function for it.
-
-const populateCityData = (subheading, temp, condition, city, week) => {
-
-  // This takes care of the selected city's current conditions
-  subheading.innerHTML = `${city.geoloc.city}`;
-  temp.innerHTML = `${city.current[0].temp}&#176;`;
-  condition.innerHTML = `${city.current[0].condition}`;
-
-  // Here we'll retrieve a city's weekly information from the cities object
-  for (let day of city.weekly) {
-    let weeklyListItem = document.createElement("li"),
-      dayOfTheWeekContainer = document.createElement("div"),
-      dayOfTheWeekTitle = document.createElement("h4"),
-      lowHigh = document.createElement("h5"),
-      dayOfTheWeekConditions = document.createElement("p");
-
-    dayOfTheWeekContainer.className = "day";
-    dayOfTheWeekTitle.innerHTML = `${day.day} ${day.date}`;
-    lowHigh.innerHTML = `${day.low}&#176;/${day.high}&#176;`;
-
-    // Handle our daymode/darkmode needs
-    const darkmode = document.querySelectorAll(".darkmode");
-    let condition = darkmode.length === 0 ? day.daycondition : day.nightcondition;
-    dayOfTheWeekConditions.innerHTML = condition;
-
-    dayOfTheWeekContainer.appendChild(dayOfTheWeekTitle);
-    dayOfTheWeekContainer.appendChild(lowHigh);
-    dayOfTheWeekContainer.appendChild(dayOfTheWeekConditions);
-
-    weeklyListItem.appendChild(dayOfTheWeekContainer);
-    week.appendChild(weeklyListItem);
-  }
-};
-
-// Get the hour of the day so we can setup styling on the class darkmode 
-const getHourOfDay = (body) => {
-  const date = new Date(),
-    hours = date.getHours();
-  
-  if (hours >= 20 || hours < 7) {
-    body.classList.add("darkmode");
-  }
-  return hours;
+  }  
+  dateAndTimeConfig(body, content);
 };
 
 // Here we'll create a script tag for the jsonp source so we can use the callback function to access the data

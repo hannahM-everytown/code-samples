@@ -1,5 +1,6 @@
 body {
   color: #281e38;
+  display:flex;
   font-family: 'Source Sans Pro';
 }
 
@@ -12,6 +13,19 @@ h5 {
   margin-top: 5px;
 }
 
+p {
+  font-size: .9em;  
+}
+
+.left-content {
+  max-width: 275px;
+  width: 25%;
+}
+
+.right-content {
+  width: 68%;
+}
+
 #city-select {
   background: lavender; 
   border: 0;
@@ -22,9 +36,9 @@ h5 {
 }
 
 #forecast {
-  border: 1px solid #281e38;
   display: flex;
-  justify-content: center;  
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .darkmode #forecast {
@@ -33,9 +47,11 @@ h5 {
 
 .weekly-forecast {
   display: flex;
+  flex: 0 0 auto;
   list-style: none;
   margin: 0;
-  padding: 0;
+  max-width: 1200px;
+  padding: 20px 0;
 }
 
 .darkmode .weekly-forecast {
@@ -66,4 +82,13 @@ h5 {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+}
+
+.today {
+  background: lavender;
+  border: 1px solid;
+  zoom: 110%;
+}
+.today:not(:first-of-type) {
+  border-left: 0;
 }
