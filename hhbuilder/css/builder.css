@@ -96,6 +96,11 @@ button {
 	text-transform: capitalize;
 }
 
+.delete {
+	border-radius: 50%;
+	padding: 3px 6px;
+}
+
 .button-wrapper:not(:last-of-type) {
 	display: inline-block;
 }

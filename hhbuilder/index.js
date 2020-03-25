@@ -36,9 +36,10 @@ const setupBuilder = () => {
     if (field.firstElementChild.nodeName === "BUTTON") {
       field.className = "button-wrapper";
     } else {
-      field.className = "input-wrapper";
-
+      
       const spanElement = document.createElement("span");
+      
+      field.className = "input-wrapper";
       spanElement.style.display = i === 3 ? "block" : "none";
       spanElement.className = i === 3 ? "checkmark" : "error";
       field.firstElementChild.appendChild(spanElement);
@@ -46,8 +47,9 @@ const setupBuilder = () => {
   }
 };
 
-// We need to watch for user input on the age and relationship fields so that we can add validation
-const watchForInput = e => {
+// We need to watch for user input on the age and relationship fields so that once a user enters 
+// data we can reset the fields.
+const resetFields = e => {
   const input = e.target,
     errorMessage = input.parentNode.parentNode.querySelector(".error");
 
@@ -83,7 +85,7 @@ const validateForm = () => {
           error.innerHTML = "Please enter a valid age";
           isError = true;
           errorArr.push(isError);
-          theForm.age.addEventListener("keyup", watchForInput);
+          theForm.age.addEventListener("keyup", resetFields);
         }
 
         // relationship field
@@ -93,7 +95,7 @@ const validateForm = () => {
           error.innerHTML = "Please select a relationship";
           isError = true;
           errorArr.push(isError);
-          theForm.relationship.addEventListener("change", watchForInput);
+          theForm.relationship.addEventListener("change", resetFields);
         }
       }
     }
@@ -168,19 +170,82 @@ const updateRow = button => {
   button.className = "add";
 
   activeRow.classList.remove("active");
+  activeRow.querySelector("button").remove();
 };
 
-const deleteRow = () => {};
+const deleteRow = (row, uButton, dButton) => {
+
+  dButton.addEventListener("click", function() {
+    theForm.form.reset();
+    theForm.age.value = "";
+    theForm.relationship.value = "";
+    theForm.smoker.value = "off";
+
+    uButton.innerHTML = "add";
+    uButton.className = "add";
+    this.parentNode.remove();
+  });
+};
+
+const detectNewRow = () => {
+  
+};
+
+const editRow = (table) => {
+  const tableBodyRows = table.querySelectorAll("tbody tr"),
+    addButton = theForm.form.querySelector(".add"),
+    deleteButton = document.createElement("button");
+    updateButton = addButton;
+
+  deleteButton.type ="button";
+  deleteButton.className = "delete";
+  deleteButton.innerHTML = "x";
+
+  for (let tableBodyRow of tableBodyRows) {
+    tableBodyRow.addEventListener("click", function(e) {
+    console.log(tableBodyRows.length)
+
+      if (e.target.nodeName !== "BUTTON") {
+        if (table.classList.contains("edit-table")) {
+
+          let activeClasses = table.querySelectorAll(".active");
+
+          for (let activeClass of activeClasses) {
+            activeClass.classList.remove("active");
+          }
+
+          this.className = "active";
+
+          if (this.querySelector(".delete") === null ) {
+            this.appendChild(deleteButton);
+          }
+
+          deleteRow(this, updateButton, deleteButton);
+
+          if (!updateButton.className.contains) {
+            updateButton.className = "update";
+            updateButton.innerHTML = "update";
+            updateButton.type = "button";            
+          }
+
+          const rowData = this.querySelectorAll("td");
+
+          theForm.age.value = rowData[0].innerHTML;
+          theForm.relationship.value = rowData[1].innerHTML;
+
+          if (rowData[2].value === "true") {
+            theForm.smoker.checked = rowData[2].innerHTML;
+          }
+        }        
+      }        
+    });
+  }
+}
 
 // If a user needs to edit the form, this function will allow them to click on a household member and display that
 // info back in the form fields so they can be updated.
-const setupTableToEdit = table => {
-  const editHouseholdButton = document.createElement("button");
-
-  const tableBodyRows = table.querySelectorAll("tbody tr"),
-    deleteButton = document.createElement("button"),
-    addButton = theForm.form.querySelector(".add"),
-    updateButton = addButton;
+const setupEditView = table => {
+  const editHouseholdButton = document.createElement("button")
 
   editHouseholdButton.type = "button";
   editHouseholdButton.className = "edit-household";
@@ -203,42 +268,12 @@ const setupTableToEdit = table => {
 
   table.classList.remove("edit-table");
   table.parentNode.classList.remove("edit-view");
+  editRow(table);
 
-  for (let tableBodyRow of tableBodyRows) {
-    tableBodyRow.addEventListener("click", function() {
-      if (table.classList.contains("edit-table")) {
-        let activeClasses = table.querySelectorAll(".active");
-
-        for (let activeClass of activeClasses) {
-          activeClass.classList.remove("active");
-        }
-
-        this.className = "active";
-        console.log(tableBodyRow);
-
-        // delete button
-
-        updateButton.className = "update";
-        updateButton.innerHTML = "update";
-        updateButton.type = "button";
-
-        addButton.parentNode.replaceChild(updateButton, addButton);
-
-        const rowData = this.querySelectorAll("td");
-
-        theForm.age.value = rowData[0].innerHTML;
-        theForm.relationship.value = rowData[1].innerHTML;
-
-        if (rowData[2].innerHTML === "true") {
-          theForm.smoker.checked = rowData[2].innerHTML;
-        }
-      }
-    });
-  }
 };
 
 // This takes care of our form submission and fulfills requirements of the challenge
-const submitHousehold = e => {
+const submitForm = e => {
   const table = document.querySelector("table");
   e.preventDefault();
 
@@ -252,13 +287,15 @@ const submitHousehold = e => {
     "Thank you for submitting your household. If you need to edit your submission, click on Edit Household below.";
 
   theForm.form.reset();
-  setupTableToEdit(table);
+  setupEditView(table);
+
+
 };
 
 // Handle the builder form. We'll determine if we're in our edit view so we can update household members and if not,
 // we can add a new member
-const formFunctionality = () => {
-  const buttons = theForm.form.getElementsByTagName("button");
+const modifyForm = () => {
+  const buttons = document.getElementsByTagName("button");
 
   if (validateForm().includes(true)) {
     return;
@@ -278,8 +315,8 @@ const listeners = () => {
   const addButton = theForm.form.querySelector(".add"),
     submitButton = theForm.form.querySelector("button[type=submit]");
 
-  addButton.addEventListener("click", formFunctionality, false);
-  submitButton.addEventListener("click", submitHousehold, false);
+  addButton.addEventListener("click", modifyForm, false);
+  submitButton.addEventListener("click", submitForm, false);
 };
 
 // Adding Google font and custom styles for our module

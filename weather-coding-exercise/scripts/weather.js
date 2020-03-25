@@ -100,6 +100,8 @@ const hdnWeatherJsonpCallback = data => {
 
   // loop through the cities object to get data for each city
   for (let city of cities) {
+    console.log(city)
+    
     const selectOption = document.createElement("option");
 
     selectOption.innerHTML = city.geoloc.city;
